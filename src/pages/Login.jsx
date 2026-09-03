@@ -1,182 +1,26 @@
-import React, { useState } from 'react'
-import {
-  Link,
-  useNavigate
-} from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
-
   const navigate = useNavigate()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleLogin = (e) => {
-
-    e.preventDefault()
-
-    if (!email || !password) {
-      alert('Please enter email and password')
+  const handleLogin = (event) => {
+    event.preventDefault()
+    if (!email.trim() || !password) {
+      setError('Enter both your email address and password to continue.')
       return
     }
-
-    localStorage.setItem(
-      'isAuth',
-      'true'
-    )
-
+    localStorage.setItem('isAuth', 'true')
     navigate('/dashboard')
   }
 
-  return (
-    <div className="login-page">
-
-      <div className="login-bg-circle circle-one"></div>
-      <div className="login-bg-circle circle-two"></div>
-
-
-      <div className="login-wrapper">
-
-
-        <Link
-          to="/"
-          className="login-brand"
-        >
-
-          <span>M</span>
-
-          <div>
-            <strong>MyApp</strong>
-            <small>Platform</small>
-          </div>
-
-        </Link>
-
-
-        <div className="login-card">
-
-          <div className="login-header">
-
-            <div className="login-icon">
-              ↗
-            </div>
-
-            <h1>
-              Welcome back
-            </h1>
-
-            <p>
-              Sign in to continue to your account
-            </p>
-
-          </div>
-
-
-          <form onSubmit={handleLogin}>
-
-            <div className="input-group">
-
-              <label>
-                Email address
-              </label>
-
-              <div className="input-wrapper">
-
-                <span>✉</span>
-
-                <input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) =>
-                    setEmail(e.target.value)
-                  }
-                />
-
-              </div>
-
-            </div>
-
-
-            <div className="input-group">
-
-              <label>
-                Password
-              </label>
-
-              <div className="input-wrapper">
-
-                <span>●</span>
-
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value)
-                  }
-                />
-
-              </div>
-
-            </div>
-
-
-            <div className="login-options">
-
-              <label className="remember">
-
-                <input
-                  type="checkbox"
-                />
-
-                <span>
-                  Remember me
-                </span>
-
-              </label>
-
-              <a href="#forgot">
-                Forgot password?
-              </a>
-
-            </div>
-
-
-            <button
-              type="submit"
-              className="signin-button"
-            >
-              Sign In
-              <span>→</span>
-            </button>
-
-          </form>
-
-
-          <div className="login-divider">
-            <span>SECURE LOGIN</span>
-          </div>
-
-
-          <Link
-            to="/"
-            className="back-home"
-          >
-            ← Back to Home
-          </Link>
-
-        </div>
-
-
-        <p className="login-footer">
-          © 2026 MyApp. All rights reserved.
-        </p>
-
-      </div>
-
-    </div>
-  )
+  return <main className="auth-page">
+    <div className="auth-art"><Link to="/" className="navbar-logo"><span className="logo-box">M</span><span>my<span>app</span></span></Link><div className="auth-quote"><span>“</span><p>One calm place for all the work that moves your team forward.</p><small>MYAPP WORKSPACE</small></div><div className="auth-shape shape-one" /><div className="auth-shape shape-two" /></div>
+    <section className="auth-panel" aria-labelledby="login-title"><Link to="/" className="back-link">← Back to home</Link><div className="auth-form-wrap"><p className="eyebrow">WELCOME BACK</p><h1 id="login-title">Sign in to your<br />workspace.</h1><p className="auth-intro">Enter your details to pick up where you left off.</p><form onSubmit={handleLogin} noValidate><label>Email address<input type="email" autoComplete="email" placeholder="you@company.com" value={email} onChange={(event) => { setEmail(event.target.value); setError('') }} aria-invalid={Boolean(error)} /></label><label>Password<span className="label-action">Forgot password?</span><input type="password" autoComplete="current-password" placeholder="Enter your password" value={password} onChange={(event) => { setPassword(event.target.value); setError('') }} aria-invalid={Boolean(error)} /></label>{error && <p className="form-error" role="alert">{error}</p>}<div className="remember-row"><label className="checkbox-label"><input type="checkbox" /> <span>Remember me for 30 days</span></label></div><button className="button button-primary auth-submit" type="submit">Sign in <span>→</span></button></form><p className="secure-note">⌁ Secure, encrypted access to your workspace</p></div></section>
+  </main>
 }
 
 export default Login
